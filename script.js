@@ -57,6 +57,7 @@ function generate() {
     let name = document.getElementById("name").value;
     let cls = document.getElementById("class").value;
     let level = parseInt(document.getElementById("level").value);
+    let race = document.getElementById("race").value;
 
     let str = parseInt(document.getElementById("str").value);
     let dex = parseInt(document.getElementById("dex").value);
@@ -64,6 +65,31 @@ function generate() {
     let int = parseInt(document.getElementById("int").value);
     let sab = parseInt(document.getElementById("sab").value);
     let car = parseInt(document.getElementById("car").value);
+
+    // Apply background bonuses
+    const bg = document.getElementById("background").value;
+    if (backgroundMainStats[bg]) {
+        const bonus1 = parseInt(document.getElementById("antatb1").value) || 0;
+        const bonus2 = parseInt(document.getElementById("antatb2").value) || 0;
+        const bonus3 = parseInt(document.getElementById("antatb3").value) || 0;
+
+        const statMap = {
+            "Força": "str",
+            "Destreza": "dex",
+            "Constituição": "con",
+            "Inteligência": "int",
+            "Sabedoria": "sab",
+            "Carisma": "car"
+        };
+
+        const bonuses = [bonus1, bonus2, bonus3];
+        backgroundMainStats[bg].forEach((stat, index) => {
+            const statKey = statMap[stat];
+            if (statKey) {
+                eval(`${statKey} += bonuses[${index}];`);
+            }
+        });
+    }
 
     let hpBase = {
         "Bárbaro": 12,
@@ -89,6 +115,8 @@ function generate() {
     <h3>${name}</h3>
     <p><b>Classe:</b> ${cls}</p>
     <p><b>Nível:</b> ${level}</p>
+    <p><b>Raça:</b> ${race}</p>
+    <p><b>Antecedente:</b> ${bg}</p>
     <hr>
     <p><b>FOR:</b> ${str} (mod ${modifier(str)})</p>
     <p><b>DES:</b> ${dex} (mod ${modifier(dex)})</p>
@@ -99,32 +127,31 @@ function generate() {
     <hr>
     <p><b>HP:</b> ${hp}</p>
     <p><b>AC:</b> ${ac}</p>
+    <p><b>Deslocamento:</b> ${desloc}m</p>
+    <p><b>Iniciativa:</b> +${init}</p>
   `;
 }
 
 const backgroundMainStats = {
-    "Acólito": ["Sabedoria", "Carisma", "Inteligência"],
-    "Andarilho": ["Força", "Constituição", "Sabedoria"],
-    "Artesão": ["Força", "Inteligência", "Destreza"],
-    "Artista": ["Carisma", "Destreza", "Inteligência"],
-    "Charlatão": ["Carisma", "Destreza", "Inteligência"],
-    "Criminoso": ["Destreza", "Inteligência", "Carisma"],
-    "Eremita": ["Sabedoria", "Constituição", "Inteligência"],
-    "Mercador": ["Carisma", "Inteligência", "Sabedoria"],
-    "Escriba": ["Inteligência", "Sabedoria", "Destreza"],
-    "Nobre": ["Carisma", "Inteligência", "Sabedoria"],
-    "Fazendeiro": ["Constituição", "Força", "Sabedoria"],
-    "Sábio": ["Inteligência", "Sabedoria", "Carisma"],
-    "Guarda": ["Força", "Constituição", "Sabedoria"],
-    "Soldado": ["Força", "Constituição", "Destreza"],
-    "Guia": ["Destreza", "Sabedoria", "Constituição"],
-    "Marinheiro": ["Força", "Destreza", "Constituição"]
+    "Acólito": ["Inteligência", "Sabedoria", "Carisma"],
+    "Andarilho": ["Destreza", "Sabedoria", "Carisma"],
+    "Artesão": ["Força", "Destreza", "Inteligência"],
+    "Artista": ["Força", "Destreza", "Carisma"],
+    "Charlatão": ["Destreza", "Constituição", "Carisma"],
+    "Criminoso": ["Destreza", "Constituição", "Inteligência"],
+    "Eremita": ["Constituição", "Sabedoria", "Carisma"],
+    "Escriba": ["Destreza", "Inteligência", "Sabedoria"],
+    "Fazendeiro": ["Força", "Constituição", "Sabedoria"],
+    "Guarda": ["Força", "Inteligência", "Sabedoria"],
+    "Guia": ["Destreza", "Constituição", "Sabedoria"],
+    "Marinheiro": ["Força", "Destreza", "Sabedoria"],
+    "Mercador": ["Constituição", "Inteligência", "Carisma"],
+    "Nobre": ["Força", "Inteligência", "Carisma"],
+    "Sábio": ["Constituição", "Inteligência", "Sabedoria"],
+    "Soldado": ["Força", "Destreza", "Constituição"]
 };
 
 function updateBackgroundBonus() {
-    let antatb1 = parseInt(document.getElementById("antatb1").value);
-    let antatb2 = parseInt(document.getElementById("antatb2").value);
-    let antatb3 = parseInt(document.getElementById("antatb3").value);
     const bg = document.getElementById("background").value;
 
     const labels = [
