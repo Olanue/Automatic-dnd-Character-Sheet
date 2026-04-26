@@ -106,6 +106,27 @@
                     <input id="level" type="number" value="1">
                 </div>
 
+                <div class="field">
+                    <h3>Tendencia:</h3>
+                    <select id="algn">
+                        <option>---</option>
+                        <option>Leal Bom</option>  
+                        <option>Neutro Bom</option>
+                        <option>Caótico Bom</option>
+                        <option>Leal Neutro</option>
+                        <option>Neutro</option>
+                        <option>Caótico Neutro</option>
+                        <option>Leal Mau</option>
+                        <option>Neutro Mau</option>
+                        <option>Caótico Mau</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <h3>XP:</h3>
+                    <input id="xp" type="number" value="0">
+                </div>
+
             </div>
 
 
@@ -145,14 +166,15 @@
 
             </div>
 
-            <button onclick="generate()">Gerar Ficha</button>
+            <button>Gerar Ficha</button>
 
-            
+
         </div>
         <div class="sheet" id="sheet"></div>
     </div>
 
     <script src="script.js"></script>
+
 </body>
 
 </html>

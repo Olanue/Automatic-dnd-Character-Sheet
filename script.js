@@ -7,13 +7,15 @@ function generate() {
     let cls = document.getElementById("class").value;
     let level = parseInt(document.getElementById("level").value);
     let race = document.getElementById("race").value;
+    let algn = document.getElementById("algn").value;
+    let xp = parseInt(document.getElementById("xp").value) || 0;
 
-    let str = parseInt(document.getElementById("str").value);
-    let dex = parseInt(document.getElementById("dex").value);
-    let con = parseInt(document.getElementById("con").value);
-    let int = parseInt(document.getElementById("int").value);
-    let sab = parseInt(document.getElementById("sab").value);
-    let car = parseInt(document.getElementById("car").value);
+    let str = parseInt(document.getElementById("str").value) || 0;
+    let dex = parseInt(document.getElementById("dex").value) || 0;
+    let con = parseInt(document.getElementById("con").value) || 0;
+    let int = parseInt(document.getElementById("int").value) || 0;
+    let sab = parseInt(document.getElementById("sab").value) || 0;
+    let car = parseInt(document.getElementById("car").value) || 0;
 
     // Apply background bonuses
     const bg = document.getElementById("background").value;
@@ -60,26 +62,62 @@ function generate() {
     let desloc = 9;
     let init = modifier(dex);
 
+
     document.getElementById("sheet").innerHTML = `
     <h3>${name}</h3>
+    <div class="info">
     <p><b>Classe:</b> ${cls}</p>
     <p><b>Nível:</b> ${level}</p>
+    <p><b>XP:</b> ${xp}</p>
     <p><b>Raça:</b> ${race}</p>
     <p><b>Antecedente:</b> ${bg}</p>
+    <p><b>Tendência:</b> ${algn}</p>
+    </div>
     <hr>
+    <div class="info">
+    <p><b>HP:</b> ${hp}</p>
+    <p><b>AC:</b> ${ac}</p>
+    <p><b>Deslocamento:</b> ${desloc}m</p>
+    <p><b>Iniciativa:</b> +${init}</p>
+    <p><b>Proficiência:</b> +${Math.ceil(level / 4) + 1}</p>
+    <p><b>Percepção Passiva:</b> ${10 + modifier(sab)}</p>
+    </div>
+    <hr>
+    <div class="info">
     <p><b>FOR:</b> ${str} (mod ${modifier(str)})</p>
     <p><b>DES:</b> ${dex} (mod ${modifier(dex)})</p>
     <p><b>CON:</b> ${con} (mod ${modifier(con)})</p>
     <p><b>INT:</b> ${int} (mod ${modifier(int)})</p>
     <p><b>SAB:</b> ${sab} (mod ${modifier(sab)})</p>
     <p><b>CAR:</b> ${car} (mod ${modifier(car)})</p>
-    <hr>
-    <p><b>HP:</b> ${hp}</p>
-    <p><b>AC:</b> ${ac}</p>
-    <p><b>Deslocamento:</b> ${desloc}m</p>
-    <p><b>Iniciativa:</b> +${init}</p>
+    </div>
   `;
 }
+
+// Função para inicializar os event listeners
+function initializeAutoUpdate() {
+    // Lista de todos os elementos que devem atualizar a ficha automaticamente
+    const elementsToWatch = [
+        "name", "race", "class", "level", "background",
+        "str", "dex", "con", "int", "sab", "car",
+        "antatb1", "antatb2", "antatb3", "algn", "xp"
+    ];
+
+    // Adiciona event listeners para cada elemento
+    elementsToWatch.forEach(elementId => {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.addEventListener("input", generate);
+            element.addEventListener("change", generate);
+        }
+    });
+}
+
+// Inicializa a atualização automática quando a página carrega
+document.addEventListener("DOMContentLoaded", function() {
+    initializeAutoUpdate();
+    generate(); // Gera a ficha inicial
+});
 
 const backgroundMainStats = {
     "Acólito": ["Inteligência", "Sabedoria", "Carisma"],

@@ -5,22 +5,32 @@ A web-based Dungeons & Dragons character sheet generator that automatically calc
 ## 🌟 Features
 
 - **Automatic Calculations**: HP and AC are calculated based on class, level, and ability scores
+- **Race Bonuses**: Select races that provide ability score bonuses
 - **Background Bonuses**: Select backgrounds that provide ability score bonuses to specific attributes
 - **Portuguese Interface**: User-friendly interface in Portuguese
 - **Dark Theme**: Modern dark UI for comfortable use
-- **Real-time Updates**: Background selection dynamically updates bonus labels
+- **Real-time Updates**: Character sheet updates automatically as you change any values
+- **Live Preview**: See changes instantly without clicking buttons
 
 ## 🎮 How to Use
 
 1. **Open the Application**: Open index.html in any modern web browser
 2. **Enter Character Details**:
    - Name your character
-   - Select race (cosmetic - doesn't affect stats yet)
+   - Select race (provides ability bonuses)
    - Choose background (provides ability bonuses)
    - Select class and level
 3. **Set Ability Scores**: Enter base ability scores (10-20 range recommended)
 4. **Apply Background Bonuses**: Use the bonus fields that appear based on your background choice
-5. **Generate Sheet**: Click "Gerar Ficha" to create your character sheet
+5. **Watch Real-time Updates**: The character sheet updates automatically as you change any values!
+
+### Real-time Updates
+The character sheet updates instantly whenever you:
+- Change any ability score
+- Select a different race or background
+- Modify background bonus values
+- Change class or level
+- Update the character name
 
 ### Background Bonuses
 
